@@ -89,12 +89,12 @@ class AddStudentsProvider with ChangeNotifier {
           "Enroll": stuEnroll,
         }
       });
-      
+
       Navigator.push(
         context,
         MaterialPageRoute(builder: (BuildContext context) => AlterStudent()),
       );
-      
+
       StuNameController.text = '';
       stuSportsController.text = '';
       stuGenderController.text = '';

@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import '../../NavBars/NavBarTrainer.dart';
 import '../../Trainer/TrainerDboard.dart';
+import 'dart:convert';
+import 'dart:ui';
+import 'package:http/http.dart' as http;
+import 'package:firebase_database/firebase_database.dart';
 
 class ViewTasks extends StatefulWidget {
   @override
@@ -8,6 +12,41 @@ class ViewTasks extends StatefulWidget {
 }
 
 class ViewTasksstate extends State<ViewTasks> {
+  void initState() {
+    super.initState();
+    readData();
+  }
+
+  bool isLoading = true;
+  var list = [];
+  var data;
+  Future<void> readData() async {
+    var url = "https://training-manager-2003-default-rtdb.firebaseio.com/" +
+        "Practice_Task.json";
+
+    try {
+      final response = await http.get(Uri.parse(url));
+      final extractedData = json.decode(response.body) as Map<String, dynamic>;
+      if (extractedData == null) {
+        return;
+      }
+      extractedData.forEach((blogId, blogData) {
+        data = blogData['DATA'];
+
+        setState(() {
+          list.add(data);
+        });
+
+        print(list.toString());
+      });
+      setState(() {
+        isLoading = false;
+      });
+    } catch (error) {
+      throw error;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -86,7 +125,7 @@ class ViewTasksstate extends State<ViewTasks> {
           ////////////////
           _ImageData(),
           __ViewtaskHeader(),
-          Expanded(child: __ViewTask()),
+          Expanded(child: __ViewTask(list)),
           _Bottom(),
         ]),
       )),
@@ -185,33 +224,38 @@ class __ViewtaskHeader extends StatelessWidget {
 }
 
 class __ViewTask extends StatefulWidget {
+  __ViewTask(this.events);
+  List events;
+  bool value = false;
   @override
-  __ViewTaskstate createState() => __ViewTaskstate();
+  __ViewTaskstate createState() => __ViewTaskstate(events);
 }
 
 class __ViewTaskstate extends State<__ViewTask> {
+  __ViewTaskstate(this.events);
+  List events;
   bool value = false;
 
   @override
   Widget build(BuildContext context) {
     //final List<String> eventList = <String>['A', 'B', 'C'];
     //////////
-    final List<Events> events = [
-      Events(
-        id: 'p1',
-        name: 'Dart',
-        reps: 54,
-        // eventNo: '9.99',
-        // eventType: 'A',
-      ),
-      Events(
-        id: 'p1',
-        name: 'Dart',
-        reps: 45,
-        // eventNo: '9.99',
-        // eventType: 'A',
-      ),
-    ];
+    // final List<Events> events = [
+    //   Events(
+    //     id: 'p1',
+    //     name: 'Dart',
+    //     reps: 54,
+    //     // eventNo: '9.99',
+    //     // eventType: 'A',
+    //   ),
+    //   Events(
+    //     id: 'p1',
+    //     name: 'Dart',
+    //     reps: 45,
+    //     // eventNo: '9.99',
+    //     // eventType: 'A',
+    //   ),
+    // ];
     /////////
     if (events.isNotEmpty) {
       return ListView.separated(
@@ -240,7 +284,7 @@ class __ViewTaskstate extends State<__ViewTask> {
                         padding: EdgeInsets.only(top: 0, bottom: 0),
                         child: Center(
                           child: Text(
-                            events[index].name.toString(),
+                            events[index]['Exercise Name'].toString(),
                             style:
                                 TextStyle(fontSize: 10, fontFamily: 'Poppins'),
                           ),
@@ -250,7 +294,7 @@ class __ViewTaskstate extends State<__ViewTask> {
                         padding: EdgeInsets.only(top: 0, bottom: 0),
                         child: Center(
                           child: Text(
-                            events[index].reps.toString(),
+                            events[index]['Reps'].toString(),
                             style:
                                 TextStyle(fontSize: 10, fontFamily: 'Poppins'),
                           ),
@@ -260,7 +304,6 @@ class __ViewTaskstate extends State<__ViewTask> {
                         height: 25,
                         padding: EdgeInsets.only(top: 0, bottom: 0),
                         child: Center(
-                          // padding: EdgeInsets.only(left: 48),
                           child: Transform.scale(
                             scale: 0.75,
                             child: Checkbox(
@@ -369,9 +412,9 @@ class _Bottom extends StatelessWidget {
                   padding: const EdgeInsets.fromLTRB(5, 0, 1, 0),
                   child: Row(
                     children: [
-                      Icon(Icons.notifications),
+                      Icon(Icons.system_update_alt_outlined),
                       Text(
-                        " NOTIFY",
+                        " UPDATE",
                         style: TextStyle(fontFamily: 'Lato-1', fontSize: 16),
                       )
                     ],

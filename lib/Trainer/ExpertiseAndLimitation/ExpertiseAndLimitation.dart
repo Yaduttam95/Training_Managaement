@@ -1,7 +1,11 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../NavBars/NavBarTrainer.dart';
 import '../TrainerDboard.dart';
+import 'ExpertiseAndLimitationProvider.dart';
 
 class ExpertiseAndLimitation extends StatefulWidget {
   @override
@@ -117,68 +121,102 @@ class ExpertiseAndLimitationstate extends State<ExpertiseAndLimitation> {
               height: 600,
               child: ListView(
                 children: <Widget>[
+                  ///////////ENROLLMENT NUMBER/////////////////
                   Padding(
-                    padding: const EdgeInsets.all(10),
+                    padding: const EdgeInsets.only(
+                        top: 21, left: 27, right: 27, bottom: 23),
                     child: Container(
-                      padding: EdgeInsets.only(top: 10),
-                      child: TextFormField(
-                        keyboardType: TextInputType.number,
-                        decoration: const InputDecoration(
-                          border: OutlineInputBorder(),
-                          icon: const Icon(
-                            Icons.numbers,
-                            size: 30,
-                            color: Colors.black,
+                      height: 25,
+                      decoration: BoxDecoration(
+                        border: Border(
+                            bottom:
+                                BorderSide(width: 1, color: Color(0xff143F6B))),
+                      ),
+                      child: Row(
+                        children: <Widget>[
+                          Container(
+                            height: 25,
+                            width: 25,
+                            decoration: BoxDecoration(
+                              color: Color(0xffF36501),
+                            ),
+                            child: Icon(
+                              Icons.format_list_numbered,
+                              color: Colors.white,
+                            ),
                           ),
-                          hintText: 'Enter Enrollment No.',
-                          labelText: 'Enrollment No.',
-                          labelStyle: TextStyle(
-                              fontSize: 17, fontWeight: FontWeight.bold),
+                          Container(
+                            padding: EdgeInsets.only(left: 16, top: 9.6),
+                            width: 281,
+                            child: TextField(
+                              controller: context
+                                  .watch<ExpertiseAndLimitationProvider>()
+                                  .getEnrollController,
+                              onChanged: (text) => context
+                                  .read<ExpertiseAndLimitationProvider>()
+                                  .setStuEnroll(text),
+                              keyboardType: TextInputType.number,
+                              decoration: InputDecoration(
+                                  hintText: "Enter enrollment no.",
+                                  hintStyle: TextStyle(color: Colors.black)),
+                              style:
+                                  TextStyle(fontSize: 13, fontFamily: 'Lato-2'),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(27, 0, 27, 25),
+                    child: TextField(
+                      controller: context
+                          .watch<ExpertiseAndLimitationProvider>()
+                          .getStrengthController,
+                      onChanged: (text) => context
+                          .read<ExpertiseAndLimitationProvider>()
+                          .setStrength(text),
+                      textAlign: TextAlign.start,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        hintText: 'Strength...',
+                        hintStyle: TextStyle(
+                            fontSize: 13,
+                            fontFamily: 'Lato-2',
+                            color: Colors.black),
+                      ),
+                      maxLines: 6,
+                      style: TextStyle(fontSize: 13, fontFamily: 'Lato-2'),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(27, 0, 27, 25),
+                    child: TextField(
+                      controller: context
+                          .watch<ExpertiseAndLimitationProvider>()
+                          .getWeaknessController,
+                      onChanged: (text) => context
+                          .read<ExpertiseAndLimitationProvider>()
+                          .setWeakness(text),
+                      textAlign: TextAlign.start,
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          hintText: 'Weakness...',
                           hintStyle: TextStyle(
-                              fontSize: 17, fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.all(10),
-                    child: TextField(
-                      textAlign: TextAlign.start,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        hintText: 'Enter Strengths of Student',
-                        labelText: 'Strength',
-                        labelStyle: TextStyle(
-                            fontSize: 17, fontWeight: FontWeight.bold),
-                        hintStyle: TextStyle(
-                            fontSize: 17, fontWeight: FontWeight.bold),
-                      ),
+                              fontSize: 13,
+                              fontFamily: 'Lato-2',
+                              color: Colors.black)),
                       maxLines: 6,
+                      style: TextStyle(fontSize: 13, fontFamily: 'Lato-2'),
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.all(10),
-                    child: TextField(
-                      textAlign: TextAlign.start,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        hintText: 'Enter Limitation of Student',
-                        labelText: 'Limitation',
-                        labelStyle: TextStyle(
-                            fontSize: 17, fontWeight: FontWeight.bold),
-                        hintStyle: TextStyle(
-                            fontSize: 17, fontWeight: FontWeight.bold),
-                      ),
-                      maxLines: 6,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 10, right: 10),
+                    padding: const EdgeInsets.only(left: 0, right: 0),
                     child: Row(
                       children: [
                         Padding(
                             padding: const EdgeInsets.only(
-                                left: 15, top: 30, right: 10),
+                                left: 16, top: 30, right: 10),
                             child: ElevatedButton(
                               style: ElevatedButton.styleFrom(
                                   minimumSize: const Size(130, 44),
@@ -208,7 +246,7 @@ class ExpertiseAndLimitationstate extends State<ExpertiseAndLimitation> {
                             )),
                         Padding(
                             padding: const EdgeInsets.only(
-                                top: 30, right: 0, left: 77.7),
+                                top: 30, right: 16, left: 90.7),
                             child: ElevatedButton(
                               style: ElevatedButton.styleFrom(
                                   minimumSize: const Size(130, 44),
@@ -231,12 +269,16 @@ class ExpertiseAndLimitationstate extends State<ExpertiseAndLimitation> {
                                 ),
                               ),
                               onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (BuildContext context) =>
-                                          TrainerDboard()),
-                                );
+
+                                context
+                                                  .read<ExpertiseAndLimitationProvider>()
+                                                  .updateRecord(context);
+                                // Navigator.push(
+                                //   context,
+                                //   MaterialPageRoute(
+                                //       builder: (BuildContext context) =>
+                                //           TrainerDboard()),
+                                // );
                               },
                             ))
                       ],

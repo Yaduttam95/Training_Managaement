@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../../NavBars/NavBarTrainer.dart';
 import '../TrainerDboard.dart';
+import 'AddPracticetaskprovider.dart';
 
 class AddPracticeTask extends StatefulWidget {
   @override
@@ -116,94 +118,179 @@ class AddPracticeTaskstate extends State<AddPracticeTask> {
                   padding: const EdgeInsets.fromLTRB(0, 0, 0, 50),
                   child: ListView(
                     children: <Widget>[
+                      /////////////////=======$$$$$**********
                       Padding(
-                        padding: const EdgeInsets.only(top: 20),
+                        padding: const EdgeInsets.only(top: 21),
                         child: Container(
-                          padding: EdgeInsets.all(0),
-                          child: TextFormField(
-                            keyboardType: TextInputType.datetime,
-                            decoration: const InputDecoration(
-                              border: OutlineInputBorder(),
-                              icon: const Icon(
-                                Icons.calendar_month,
-                                size: 30,
-                                color: Colors.black,
+                          height: 25,
+                          decoration: BoxDecoration(
+                            border: Border(
+                                bottom: BorderSide(
+                                    width: 1, color: Color(0xff143F6B))),
+                          ),
+                          child: Row(
+                            children: <Widget>[
+                              Container(
+                                height: 25,
+                                width: 25,
+                                decoration: BoxDecoration(
+                                  color: Color(0xffF36501),
+                                ),
+                                child: Icon(
+                                  Icons.date_range,
+                                  color: Colors.white,
+                                ),
                               ),
-                              hintText: 'Date',
-                              labelText: 'Date',
-                              labelStyle: TextStyle(
-                                  fontSize: 17, fontWeight: FontWeight.bold),
-                              hintStyle: TextStyle(
-                                  fontSize: 17, fontWeight: FontWeight.bold),
-                            ),
+                              Container(
+                                padding: EdgeInsets.only(left: 16, top: 9.6),
+                                width: 317,
+                                child: TextField(
+                                  keyboardType: TextInputType.number,
+                                  controller: context
+                                      .watch<AddPracticetaskProvider>()
+                                      .getDateController,
+                                  onChanged: (text) => context
+                                      .read<AddPracticetaskProvider>()
+                                      .setTodayDate(text),
+                                  decoration: InputDecoration(
+                                    hintText: "Date",
+                                  ),
+                                  style: TextStyle(
+                                      fontSize: 13, fontFamily: 'Lato-2'),
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                      // Padding(
+                      //   padding: const EdgeInsets.only(top: 21),
+                      //   child: Container(
+                      //     height: 25,
+                      //     decoration: BoxDecoration(
+                      //       border: Border(
+                      //           bottom: BorderSide(
+                      //               width: 1, color: Color(0xff143F6B))),
+                      //     ),
+                      //     child: Row(
+                      //       children: <Widget>[
+                      //         Container(
+                      //           height: 25,
+                      //           width: 25,
+                      //           decoration: BoxDecoration(
+                      //             color: Color(0xffF36501),
+                      //           ),
+                      //           child: Icon(
+                      //             Icons.format_list_numbered,
+                      //             color: Colors.white,
+                      //           ),
+                      //         ),
+                      //         Container(
+                      //           padding: EdgeInsets.only(left: 16, top: 9.6),
+                      //           width: 317,
+                      //           child: TextField(
+                      //             keyboardType: TextInputType.number,
+                      //             // controller: context
+                      //             //     .watch<AddTrainingDetailsProvider>()
+                      //             //     .getExeNameController,
+                      //             // onChanged: (text) => context
+                      //             //     .read<AddTrainingDetailsProvider>()
+                      //             //     .setexeName(text),
+                      //             decoration: InputDecoration(
+                      //               hintText: "Enrollment No.",
+                      //             ),
+                      //             style: TextStyle(
+                      //                 fontSize: 13, fontFamily: 'Lato-2'),
+                      //           ),
+                      //         )
+                      //       ],
+                      //     ),
+                      //   ),
+                      // ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 21),
+                        child: Container(
+                          height: 25,
+                          decoration: BoxDecoration(
+                            border: Border(
+                                bottom: BorderSide(
+                                    width: 1, color: Color(0xff143F6B))),
+                          ),
+                          child: Row(
+                            children: <Widget>[
+                              Container(
+                                height: 25,
+                                width: 25,
+                                decoration: BoxDecoration(
+                                  color: Color(0xffF36501),
+                                ),
+                                child: Icon(
+                                  Icons.task_outlined,
+                                  color: Colors.white,
+                                ),
+                              ),
+                              Container(
+                                padding: EdgeInsets.only(left: 16, top: 9.6),
+                                width: 317,
+                                child: TextField(
+                                  controller: context
+                                      .watch<AddPracticetaskProvider>()
+                                      .getNameController,
+                                  onChanged: (text) => context
+                                      .read<AddPracticetaskProvider>()
+                                      .setexeName(text),
+                                  decoration: InputDecoration(
+                                    hintText: "Name of Exercise",
+                                  ),
+                                  style: TextStyle(
+                                      fontSize: 13, fontFamily: 'Lato-2'),
+                                ),
+                              )
+                            ],
                           ),
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(top: 10),
+                        padding: const EdgeInsets.only(top: 21),
                         child: Container(
-                          padding: EdgeInsets.all(0),
-                          child: TextFormField(
-                            keyboardType: TextInputType.number,
-                            decoration: const InputDecoration(
-                              border: OutlineInputBorder(),
-                              icon: const Icon(
-                                Icons.numbers,
-                                size: 30,
-                                color: Colors.black,
-                              ),
-                              hintText: 'Enrollment No.',
-                              labelText: 'Enter Enrollment No.',
-                              labelStyle: TextStyle(
-                                  fontSize: 17, fontWeight: FontWeight.bold),
-                              hintStyle: TextStyle(
-                                  fontSize: 17, fontWeight: FontWeight.bold),
-                            ),
+                          height: 25,
+                          decoration: BoxDecoration(
+                            border: Border(
+                                bottom: BorderSide(
+                                    width: 1, color: Color(0xff143F6B))),
                           ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 10),
-                        child: Container(
-                          padding: EdgeInsets.all(0),
-                          child: TextFormField(
-                            decoration: const InputDecoration(
-                              border: OutlineInputBorder(),
-                              icon: const Icon(
-                                Icons.run_circle_outlined,
-                                size: 30,
-                                color: Colors.black,
+                          child: Row(
+                            children: <Widget>[
+                              Container(
+                                height: 25,
+                                width: 25,
+                                decoration: BoxDecoration(
+                                  color: Color(0xffF36501),
+                                ),
+                                child: Icon(
+                                  Icons.repeat,
+                                  color: Colors.white,
+                                ),
                               ),
-                              hintText: 'Enter Name of Exercise',
-                              labelText: 'Exercise',
-                              labelStyle: TextStyle(
-                                  fontSize: 17, fontWeight: FontWeight.bold),
-                              hintStyle: TextStyle(
-                                  fontSize: 17, fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 10),
-                        child: Container(
-                          padding: EdgeInsets.all(0),
-                          child: TextFormField(
-                            keyboardType: TextInputType.number,
-                            decoration: const InputDecoration(
-                              border: OutlineInputBorder(),
-                              icon: const Icon(
-                                Icons.loop_sharp,
-                                size: 30,
-                                color: Colors.black,
-                              ),
-                              hintText: 'Enter Number of Reps',
-                              labelText: 'Reps.',
-                              labelStyle: TextStyle(
-                                  fontSize: 17, fontWeight: FontWeight.bold),
-                              hintStyle: TextStyle(
-                                  fontSize: 17, fontWeight: FontWeight.bold),
-                            ),
+                              Container(
+                                padding: EdgeInsets.only(left: 16, top: 9.6),
+                                width: 317,
+                                child: TextField(
+                                  keyboardType: TextInputType.number,
+                                  controller: context
+                                      .watch<AddPracticetaskProvider>()
+                                      .getRepsController,
+                                  onChanged: (text) => context
+                                      .read<AddPracticetaskProvider>()
+                                      .setexeReps(text),
+                                  decoration: InputDecoration(
+                                    hintText: "No. of Reps",
+                                  ),
+                                  style: TextStyle(
+                                      fontSize: 13, fontFamily: 'Lato-2'),
+                                ),
+                              )
+                            ],
                           ),
                         ),
                       ),
@@ -267,12 +354,9 @@ class AddPracticeTaskstate extends State<AddPracticeTask> {
                                   ),
                                 ),
                                 onPressed: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (BuildContext context) =>
-                                            TrainerDboard()),
-                                  );
+                                  context
+                                      .read<AddPracticetaskProvider>()
+                                      .AddPracticeTask(context);
                                 },
                               ))
                         ],
